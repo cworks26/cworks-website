@@ -1,0 +1,135 @@
+@import "tailwindcss";
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+/* ============================================================
+   CWorks Brand Palette — Tailwind 4 Theme
+   ============================================================
+   Black  (#000000) — primary text, dark backgrounds
+   White  (#FFFFFF) — page backgrounds, text on dark surfaces
+   Deep   (#050F67) — primary brand: headers, nav bg, CTA containers
+   Blue   (#0815A6) — secondary interactive: buttons, links, highlights
+   Accent (#1E0339) — deep accent: footer bg, overlays, secondary CTA
+   ============================================================ */
+
+@theme inline {
+  --color-primary: #0815A6;
+  --color-secondary: #050F67;
+  --color-accent: #1E0339;
+  --color-midnight_text: #000000;
+  --color-muted: #888888;
+  --color-error: #CF3127;
+  --color-warning: #F7931A;
+  --color-light_grey: #505050;
+  --color-grey: #F5F7FA;
+  --color-dark_grey: #1E2229;
+  --color-border: #E1E1E1;
+  --color-success: #3cd278;
+  --color-section: #737373;
+  --color-darkmode: #000000;
+  --color-darklight: #0a0a1a;
+  --color-dark_border: #2a2a3a;
+  --color-tealGreen: #0815A6;
+  --color-charcoalGray: #666C78;
+  --color-deepSlate: #1E0339;
+  --color-slateGray: #2F3543;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-deep: #050F67;
+  --color-blue: #0815A6;
+
+  --font-sans: "DM Sans", sans-serif;
+  --radius-lg: 0.75rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #000000;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+}
+
+section {
+  background-color: #000000;
+}
+
+::selection {
+  background: rgba(8, 21, 166, 0.3);
+  color: #ffffff;
+}
+
+*:focus-visible {
+  outline: 2px solid #0815A6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.blog-details p,
+.blog-details hr {
+  margin-bottom: 2rem;
+}
+
+.blog-details hr {
+  border-color: #2a2a3a;
+}
+
+.blog-details strong {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.blog-details ul {
+  margin-bottom: 2rem;
+  list-style-position: inside;
+  list-style-type: disc;
+}
+
+.blog-details ul > li {
+  margin-top: 0.75rem;
+}
+
+.blog-details ol {
+  margin-bottom: 2rem;
+  list-style-position: inside;
+  list-style-type: decimal;
+}
+
+.blog-details ol > li {
+  margin-top: 0.75rem;
+}
+
+.blog-details h1 {
+  margin-bottom: 2rem;
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 1.28;
+}
+
+.blog-details h2 {
+  margin-bottom: 2rem;
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 1.28;
+}
+
+.blog-details h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+/* Slick carousel overrides */
+.slick-dots li button:before {
+  color: #0815A6;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #0815A6;
+}

@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+/* ============================================================
+   CWorks Brand Palette
+   ============================================================
+   Black  (#000000) — primary text, dark backgrounds
+   White  (#FFFFFF) — page backgrounds, text on dark surfaces
+   Deep   (#050F67) — primary brand: headers, nav bg, CTA containers
+   Primary(#0815A6) — secondary interactive: buttons, links, highlights
+   Accent (#1E0339) — deep accent: footer bg, overlays, secondary CTA
+   ============================================================ */
+
+:root {
+  /* --- Palette primitives --- */
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-deep: #050F67;
+  --color-primary: #0815A6;
+  --color-accent: #1E0339;
+
+  /* --- Semantic tokens --- */
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --cyan: #0815A6;
+  --cyan-light: #0a1cc7;
+  --cyan-dark: #050F67;
+  --surface: #0a0a0f;
+  --surface-elevated: #111118;
+  --muted: #888888;
+  --border: #1e1e2a;
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-cyan: var(--cyan);
+  --color-cyan-light: var(--cyan-light);
+  --color-cyan-dark: var(--cyan-dark);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --radius-lg: var(--radius);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(8, 21, 166, 0.3);
+  color: #ffffff;
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Animated gradient background for hero */
+.hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(8, 21, 166, 0.15), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 50%, rgba(5, 15, 103, 0.08), transparent),
+              radial-gradient(ellipse 40% 30% at 20% 80%, rgba(8, 21, 166, 0.05), transparent);
+}
+
+/* Grid pattern overlay */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(8, 21, 166, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 21, 166, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Noise texture */
+.noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glow effect for cards */
+.glow-border {
+  position: relative;
+}
+.glow-border::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(8, 21, 166, 0.2), transparent 50%, rgba(8, 21, 166, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* CSS containment for off-screen sections — skips rendering until visible */
+.section-contain {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
