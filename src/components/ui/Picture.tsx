@@ -1,24 +1,21 @@
+import Image from 'next/image';
 import React from 'react';
 
-type Props = {
-  src: string; // path to png
-  alt?: string;
-  className?: string;
+interface PictureProps {
+  src: string;
+  alt: string;
   width?: number;
   height?: number;
-  sizes?: string;
-  loading?: 'lazy' | 'eager';
-  title?: string;
-};
+  className?: string;
+}
 
-const Picture: React.FC<Props> = ({ src, alt = '', className, width, height, sizes, loading = 'lazy' }) => {
-  const webp = src.replace(/\.png$/i, '.webp');
+export default function Picture({ src, alt, width, height, className }: PictureProps) {
+  // Use next/image for default; fall back to simple image if needed
   return (
-    <picture>
-      <source srcSet={webp} type="image/webp" />
-      <img src={src} alt={alt} className={className} width={width} height={height} loading={loading} sizes={sizes} />
+    <picture className={className}>
+      <source srcSet={src.replace(/\.png|\.jpg|\.jpeg$/, '.webp')} type="image/webp" />
+      <source srcSet={src.replace(/\.png|\.jpg|\.jpeg$/, '.avif')} type="image/avif" />
+      <Image src={src} alt={alt} width={width} height={height} sizes="(max-width: 768px) 100vw, 50vw" />
     </picture>
   );
-};
-
-export default Picture;
+}
