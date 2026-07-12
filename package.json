@@ -6,7 +6,12 @@
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:playwright": "npx playwright test --project=chromium --reporter=json --output=research/reports/playwright-results",
+    "audit:lighthouse:desktop": "npx lighthouse http://localhost:3000 --chrome-flags=\"--no-sandbox --headless\" --output=html --output-path=research/reports/lighthouse-desktop.html --emulated-form-factor=desktop",
+    "audit:lighthouse:mobile": "npx lighthouse http://localhost:3000 --chrome-flags=\"--no-sandbox --headless\" --output=html --output-path=research/reports/lighthouse-mobile.html --emulated-form-factor=mobile",
+    "audit:all": "npm run audit:lighthouse:desktop && npm run audit:lighthouse:mobile",
+    "audit:a11y": "npx axe-core --help || echo \"axe unavailable; run a11y checks via Playwright axe plugin\""
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
