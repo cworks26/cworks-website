@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 const VIEWPORTS = [
   { name: 'desktop', width: 1920, height: 1080 },
@@ -7,10 +8,15 @@ const VIEWPORTS = [
 ];
 
 for (const v of VIEWPORTS) {
-  test(`home page visual check - ${v.name}`, async ({ page }) => {
+  test(`home page visual & a11y check - ${v.name}`, async ({ page }) => {
     await page.setViewportSize({ width: v.width, height: v.height });
     await page.goto('http://localhost:3000', { waitUntil: 'networkidle' });
     await expect(page).toHaveTitle(/CWorks|Cryp/);
+
+    // Accessibility check
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+
     // Check that key images are visible and not broken
     const selectors = [
       'img[src*="portfolio-showcase.png"]',
