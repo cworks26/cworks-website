@@ -5,6 +5,7 @@ import Footer from "@/components/Layout/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import Aoscompo from "@/utils/aos";
 import type { Metadata } from "next";
+import Head from "next/head";
 
 const font = DM_Sans({ subsets: ["latin"], display: "swap" });
 
@@ -45,6 +46,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
+      <Head>
+        {/* Preload hero image to improve LCP */}
+        <link rel="preload" as="image" href="/images/hero/hero-section-image-3.png" />
+      </Head>
       <body className={`${font.className} bg-black text-white antialiased`}>
         <Aoscompo>
           <Header />
