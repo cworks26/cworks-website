@@ -1,10 +1,9 @@
 "use client";
 
-import { forwardRef, useImperativeHandle, useEffect, useRef, useMemo, FC, ReactNode } from "react";
+import { forwardRef, useEffect, useRef, useMemo, FC, ReactNode } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
-import { degToRad } from "three/src/math/MathUtils.js";
 
 type UniformValue = THREE.IUniform<unknown> | unknown;
 
@@ -75,12 +74,6 @@ function extendMaterial<T extends THREE.Material = THREE.Material>(
   return mat;
 }
 
-const CanvasWrapper: FC<{ children: ReactNode }> = ({ children }) => (
-  <Canvas dpr={[1, 2]} frameloop="always" className="w-full h-full relative">
-    {children}
-  </Canvas>
-);
-
 const hexToNormalizedRGB = (hex: string): [number, number, number] => {
   const clean = hex.replace("#", "");
   const r = parseInt(clean.substring(0, 2), 16);
@@ -89,24 +82,8 @@ const hexToNormalizedRGB = (hex: string): [number, number, number] => {
   return [r / 255, g / 255, b / 255];
 };
 
-const noise = `
-float random (in vec2 st) {
-    return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))*
-        43758.5453123);
-}
-float noise (in vec2 st) {
-    vec2 i = floor(st);
-    vec2 f = fract(st);
-    float a = random(i);
-    float b = random(i + vec2(1.0, 0.0));
-    float c = random(i + vec2(0.0, 1.0));
-    float d = random(i + vec2(1.0, 1.0));
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(a, b, u.x) +
-           (c - a)* u.y * (1.0 - u.x) +
-           (d - b) * u.x * u.y;
-}
+// Simplex 3D noise for shader
+const noiseGLSL = `
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
 vec3 fade(vec3 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
@@ -157,4 +134,168 @@ float cnoise(vec3 P){
   float n001 = dot(g001, vec3(Pf0.xy,Pf1.z));
   float n101 = dot(g101, vec3(Pf1.x,Pf0.y,Pf1.z));
   float n011 = dot(g011, vec3(Pf0.x,Pf1.yz));
-  float n
+  float n111 = dot(g111, Pf1);
+  vec3 fade_xyz = fade(Pf0);
+  vec4 n_z = mix(vec4(n000,n100,n010,n110), vec4(n001,n101,n011,n111), fade_xyz.z);
+  vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
+  return 2.2 * n_xyz;
+}
+`;
+
+const vertexShaderCode = `
+varying vec2 vUv;
+varying vec3 vPosition;
+void main() {
+  vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+  vec4 viewPosition = viewMatrix * modelPosition;
+  vec4 projectedPosition = projectionMatrix * viewPosition;
+  gl_Position = projectedPosition;
+  vUv = uv;
+  vPosition = modelPosition.xyz;
+}
+`;
+
+const fragmentShaderCode = `
+uniform vec3 uColor;
+uniform float uOpacity;
+uniform float uTime;
+uniform float uNoiseScale;
+uniform float uNoiseStrength;
+varying vec2 vUv;
+varying vec3 vPosition;
+${noiseGLSL}
+
+void main() {
+  float noiseVal = cnoise(vec3(vUv.x * uNoiseScale, vUv.y * uNoiseScale, uTime * 0.3));
+  float alpha = smoothstep(0.0, 0.6, vUv.x) * smoothstep(1.0, 0.4, vUv.x);
+  alpha *= smoothstep(0.0, 0.3, vUv.y) * smoothstep(1.0, 0.7, vUv.y);
+  alpha *= uOpacity;
+  alpha *= 1.0 + noiseVal * uNoiseStrength;
+  gl_FragColor = vec4(uColor, alpha);
+}
+`;
+
+function createBeamMaterial(
+  color: THREE.Color,
+  opacity: number,
+  noiseScale: number,
+  noiseStrength: number
+) {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uColor: { value: color },
+      uOpacity: { value: opacity },
+      uTime: { value: 0 },
+      uNoiseScale: { value: noiseScale },
+      uNoiseStrength: { value: noiseStrength },
+    },
+    vertexShader: vertexShaderCode,
+    fragmentShader: fragmentShaderCode,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+}
+
+interface BeamLineProps {
+  width: number;
+  height: number;
+  color: THREE.Color;
+  opacity: number;
+  noiseScale: number;
+  noiseStrength: number;
+  position: [number, number, number];
+  rotation: number;
+}
+
+const BeamLine: FC<BeamLineProps> = ({
+  width,
+  height,
+  color,
+  opacity,
+  noiseScale,
+  noiseStrength,
+  position,
+  rotation,
+}) => {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+
+  useEffect(() => {
+    if (!meshRef.current) return;
+    const mat = createBeamMaterial(color, opacity, noiseScale, noiseStrength);
+    materialRef.current = mat;
+    meshRef.current.material = mat;
+  }, []);
+
+  useFrame((state) => {
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={position} rotation={[0, 0, rotation]}>
+      <planeGeometry args={[width, height]} />
+    </mesh>
+  );
+};
+
+type Beam = {
+  color: THREE.Color;
+  width: number;
+  height: number;
+  opacity: number;
+  noiseScale: number;
+  noiseStrength: number;
+  position: [number, number, number];
+  rotation: number;
+};
+
+interface BeamsBackgroundProps {
+  beams?: Beam[];
+  className?: string;
+}
+
+const defaultBeams: Beam[] = [
+  { color: new THREE.Color("#0815A6"), width: 12, height: 30, opacity: 0.15, noiseScale: 2.5, noiseStrength: 0.4, position: [-6, -4, 0], rotation: 0.3 },
+  { color: new THREE.Color("#0815A6"), width: 10, height: 28, opacity: 0.12, noiseScale: 3.0, noiseStrength: 0.35, position: [4, 2, 0], rotation: -0.5 },
+  { color: new THREE.Color("#3B82F6"), width: 14, height: 32, opacity: 0.1, noiseScale: 2.0, noiseStrength: 0.3, position: [-2, 5, 0], rotation: 0.15 },
+  { color: new THREE.Color("#60A5FA"), width: 8, height: 24, opacity: 0.13, noiseScale: 3.5, noiseStrength: 0.45, position: [5, -3, 0], rotation: -0.25 },
+  { color: new THREE.Color("#0815A6"), width: 11, height: 26, opacity: 0.08, noiseScale: 2.8, noiseStrength: 0.38, position: [0, -6, 0], rotation: 0.6 },
+  { color: new THREE.Color("#3B82F6"), width: 9, height: 22, opacity: 0.11, noiseScale: 3.2, noiseStrength: 0.42, position: [-5, 1, 0], rotation: -0.35 },
+];
+
+const BeamScene: FC<{ beams?: Beam[] }> = ({ beams }) => {
+  const config = beams ?? defaultBeams;
+
+  return (
+    <>
+      <PerspectiveCamera makeDefault position={[0, 0, 20]} fov={60} />
+      {config.map((beam, i) => (
+        <BeamLine key={i} {...beam} />
+      ))}
+    </>
+  );
+};
+
+const BeamsBackground: FC<BeamsBackgroundProps> = ({
+  beams,
+  className = "",
+}) => {
+  return (
+    <div className={`absolute inset-0 overflow-hidden -z-10 ${className}`}>
+      <Canvas
+        dpr={[1, 2]}
+        frameloop="always"
+        gl={{ antialias: true, alpha: true }}
+        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+      >
+        <BeamScene beams={beams} />
+      </Canvas>
+    </div>
+  );
+};
+
+export default BeamsBackground;

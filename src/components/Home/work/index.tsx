@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Picture from '@/components/ui/Picture';
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { getImagePrefix } from "@/utils/utils";
@@ -11,13 +12,13 @@ const Work = () => {
   const TopAnimation = {
     initial: { y: "-100%", opacity: 0 },
     animate: inView ? { y: 0, opacity: 1 } : { y: "-100%", opacity: 0 },
-    transition: { duration: 0.6, delay: 0.4 },
+    transition: { duration: 0.45, delay: 0.2 },
   };
 
   const bottomAnimation = {
     initial: { y: "100%", opacity: 0 },
     animate: inView ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 },
-    transition: { duration: 0.6, delay: 0.4 },
+    transition: { duration: 0.45, delay: 0.2 },
   };
 
   const stats = [
@@ -68,8 +69,8 @@ const Work = () => {
           </motion.div>
           <motion.div {...TopAnimation} className="lg:col-span-5 col-span-12">
             <div className="2xl:-mr-40 mt-9 flex justify-center">
-              <Image
-                src= {`${getImagePrefix()}images/work/team-collaboration.png`}
+              <Picture
+                src={`${getImagePrefix()}images/work/team-collaboration.png`}
                 alt="CWorks professional team collaborating on digital projects in a modern Kampala office"
                 title="Meet the CWorks Team"
                 width={600}

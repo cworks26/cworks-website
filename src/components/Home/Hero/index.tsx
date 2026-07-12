@@ -3,22 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import CardSlider from "./slider";
+import { usePrefersReducedMotion } from '@/utils/usePrefersReducedMotion';
 import { getImagePrefix } from "@/utils/utils";
 
 const Hero = () => {
-  const leftAnimation = {
-    initial: { x: "-100%", opacity: 0 },
-    animate: { x: 0, opacity: 1 },
-    exit: { x: "-100%", opacity: 0 },
-    transition: { duration: 0.6 },
-  };
+  const leftAnimation = (prefersReducedMotion: boolean) => prefersReducedMotion ? { initial: { opacity: 1, x: 0 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 1, x: 0 }, transition: { duration: 0 } } : { initial: { x: "-100%", opacity: 0 }, animate: { x: 0, opacity: 1 }, exit: { x: "-100%", opacity: 0 }, transition: { duration: 0.5 } };
 
-  const rightAnimation = {
-    initial: { x: "100%", opacity: 0 },
-    animate: { x: 0, opacity: 1 },
-    exit: { x: "100%", opacity: 0 },
-    transition: { duration: 0.6 },
-  };
+  const rightAnimation = (prefersReducedMotion: boolean) => prefersReducedMotion ? { initial: { opacity: 1, x: 0 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 1, x: 0 }, transition: { duration: 0 } } : { initial: { x: "100%", opacity: 0 }, animate: { x: 0, opacity: 1 }, exit: { x: "100%", opacity: 0 }, transition: { duration: 0.6 } };
+
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
     <section
@@ -27,7 +20,7 @@ const Hero = () => {
     >
       <div className="container mx-auto lg:max-w-screen-xl px-4">
         <div className="grid grid-cols-12">
-          <motion.div {...leftAnimation} className="lg:col-span-5 col-span-12">
+          <motion.div {...leftAnimation(prefersReducedMotion)} className="lg:col-span-5 col-span-12">
             <div className="flex gap-6 items-center lg:justify-start justify-center mb-5 mt-24">
               <Image
                 src= {`${getImagePrefix()}images/icons/icon-bag.svg`}
@@ -64,12 +57,12 @@ const Hero = () => {
             </div>
           </motion.div>
           <motion.div
-            {...rightAnimation}
+            {...rightAnimation(prefersReducedMotion)}
             className="col-span-7 lg:block hidden"
           >
             <div className="ml-20 -mr-64">
               <Image
-                src= {`${getImagePrefix()}images/hero/hero-section-image-3.png`}
+                src={`${getImagePrefix()}images/hero/hero-section-image-3.png`}
                 alt="CWorks digital agency hero banner"
                 width={1150}
                 height={1150}

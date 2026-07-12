@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Picture from '@/components/ui/Picture';
 import { timelineData } from "@/app/api/data";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -12,7 +13,7 @@ const TimeLine = () => {
   const TopAnimation = {
     initial: { y: "-100%", opacity: 0 },
     animate: inView ? { y: 0, opacity: 1 } : { y: "-100%", opacity: 0 },
-    transition: { duration: 0.6, delay: 0.4 },
+    transition: { duration: 0.45, delay: 0.2 },
   };
   return (
     <section className="md:pt-40 pt-9" id="development">
@@ -37,8 +38,8 @@ const TimeLine = () => {
           >
             <div className="md:block hidden relative">
               <div>
-                <Image
-                  src= {`${getImagePrefix()}images/timeline/process-flow.png`} 
+                <Picture
+                src={`${getImagePrefix()}images/timeline/process-flow.png`} 
                   alt="CWorks project development process flow from discovery through design, development, and launch"
                   title="CWorks Development Process"
                   width={1220}

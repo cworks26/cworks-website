@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
+import Picture from '@/components/ui/Picture';
 import { Icon } from "@iconify/react";
 import { getImagePrefix } from "@/utils/utils";
+import BeamsBackground from "@/components/Backgrounds/Beams";
 
 const benefits = [
   { title: "Free Consultation" },
@@ -12,8 +14,9 @@ const benefits = [
 
 const Upgrade = () => {
   return (
-    <section className="md:py-40 py-20" id="contact">
-      <div className="container mx-auto lg:max-w-screen-xl px-4">
+    <section className="md:py-40 py-20 relative" id="contact">
+      <BeamsBackground />
+      <div className="container mx-auto lg:max-w-screen-xl px-4 relative z-10">
         <div className="grid lg:grid-cols-2 sm:gap-0 gap-10 items-center">
           <div>
             <p className="text-primary sm:text-28 text-18 mb-3">Let's Talk</p>
@@ -59,8 +62,8 @@ const Upgrade = () => {
           </div>
           <div>
             <div className="">
-              <Image
-                src= {`${getImagePrefix()}images/upgrade/lets-talk.png`}
+              <Picture
+                src={`${getImagePrefix()}images/upgrade/lets-talk.png`}
                 alt="CWorks client consultation and project discussion for digital solutions"
                 title="Let's Talk About Your Project"
                 width={625}

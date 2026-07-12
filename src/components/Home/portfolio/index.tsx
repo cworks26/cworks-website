@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Picture from '@/components/ui/Picture';
 import { portfolioData } from "@/app/api/data";
 import { motion } from "framer-motion";
 import { getImagePrefix } from "@/utils/utils";
@@ -12,11 +13,11 @@ const Portfolio = () => {
           <motion.div
             whileInView={{ y: 0, opacity: 1 }}
             initial={{ y: "-100%", opacity: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.45 }}
             className="lg:-ml-32"
           >
-            <Image
-              src= {`${getImagePrefix()}images/portfolio/portfolio-showcase.png`}
+            <Picture
+              src={`${getImagePrefix()}images/portfolio/portfolio-showcase.png`}
               alt="CWorks digital portfolio showcasing completed web development and UI/UX design projects"
               title="CWorks Portfolio"
               width={780}
