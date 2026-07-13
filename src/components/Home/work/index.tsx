@@ -92,7 +92,7 @@ const Work = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent rounded-3xl blur-3xl" />
               <Picture
-                src={`${getImagePrefix()}images/work/team-collaboration.svg`}
+                src={`${getImagePrefix()}images/work/team-collaboration.jpg`}
                 alt="CWorks professional team collaborating on digital projects in Kampala"
                 title="Meet the CWorks Team"
                 width={600}

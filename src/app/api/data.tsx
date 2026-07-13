@@ -90,7 +90,7 @@ export const portfolioData: {
   link?: string;
 }[] = [
   {
-    image: "images/portfolio/ecommerce-platform.svg",
+    image: "images/portfolio/ecommerce-platform.jpg",
     title: "E-Commerce Platform",
     category: "Web Development",
     description:
@@ -98,7 +98,7 @@ export const portfolioData: {
     link: "#",
   },
   {
-    image: "images/portfolio/healthcare-dashboard.svg",
+    image: "images/portfolio/healthcare-dashboard.jpg",
     title: "Healthcare Dashboard",
     category: "UI/UX Design",
     description:
@@ -106,7 +106,7 @@ export const portfolioData: {
     link: "#",
   },
   {
-    image: "images/portfolio/restaurant-website.svg",
+    image: "images/portfolio/restaurant-website.jpg",
     title: "Restaurant Chain Website",
     category: "Web Development",
     description:
@@ -114,7 +114,7 @@ export const portfolioData: {
     link: "#",
   },
   {
-    image: "images/portfolio/ngo-portal.svg",
+    image: "images/portfolio/ngo-portal.jpg",
     title: "NGO Impact Portal",
     category: "Custom Systems",
     description:
@@ -122,7 +122,7 @@ export const portfolioData: {
     link: "#",
   },
   {
-    image: "images/portfolio/school-system.svg",
+    image: "images/portfolio/school-system.jpg",
     title: "School Management System",
     category: "Database & Systems",
     description:
@@ -130,7 +130,7 @@ export const portfolioData: {
     link: "#",
   },
   {
-    image: "images/portfolio/realestate-listings.svg",
+    image: "images/portfolio/realestate-listings.jpg",
     title: "Real Estate Listings",
     category: "Web Development",
     description:
