@@ -7,42 +7,42 @@ const SERVICES = [
     icon: "🌐",
     title: "Web Development",
     description:
-      "We build responsive, high-performance websites and web applications tailored to your business needs. From landing pages to full-scale platforms — we deliver clean code that scales.",
+      "Turn visitors into customers with fast, responsive websites and web apps. We build everything from landing pages to full-scale platforms — with clean, maintainable code that grows with your business.",
     techStack: ["React", "Next.js", "TypeScript", "Node.js", "PHP", "Python"],
   },
   {
     icon: "🎨",
     title: "UI/UX Design",
     description:
-      "User-centered design that converts. We craft intuitive interfaces through research-driven wireframes, interactive prototypes, and polished visual designs that delight your users.",
+      "Design that converts. We craft intuitive interfaces through research-driven wireframes, interactive prototypes, and polished visuals — transforming complex ideas into experiences users love.",
     techStack: ["Figma", "User Research", "Wireframing", "Prototyping", "Design Systems"],
   },
   {
     icon: "✏️",
     title: "Graphic Design",
     description:
-      "Memorable brand identities that stand out. From logos and brand guidelines to social media assets and print materials — we create visuals that tell your story and leave a lasting impression.",
+      "Stand out with a memorable brand identity. From logos and guidelines to social media assets and print materials — we create visuals that tell your story and command attention.",
     techStack: ["Logo Design", "Brand Identity", "Print Design", "Social Media Assets", "Illustrations"],
   },
   {
     icon: "💾",
     title: "Database & Systems",
     description:
-      "Robust data architecture that powers your business. We design, implement, and manage database systems — ensuring your data is structured, secure, scalable, and always accessible.",
+      "Power your operations with robust, secure data architecture. We design and manage database systems that keep your data structured, accessible, and ready to scale as you grow.",
     techStack: ["MySQL", "PostgreSQL", "MongoDB", "Schema Design", "Migration", "Backup Strategy"],
   },
   {
     icon: "📊",
     title: "Brand Strategy",
     description:
-      "Strategic thinking behind every pixel. We help you define your brand positioning, voice, and digital marketing approach — building a cohesive presence that resonates with your audience.",
+      "Build a brand that resonates. We help you define your positioning, voice, and digital marketing approach — creating a cohesive presence that attracts and retains your ideal clients.",
     techStack: ["Brand Positioning", "SEO", "Content Strategy", "Social Media", "Analytics"],
   },
   {
     icon: "🔧",
     title: "Maintenance & Support",
     description:
-      "Your digital products need ongoing care. We provide reliable maintenance, security updates, performance monitoring, and technical support — so you can focus on running your business.",
+      "Keep your digital products running smoothly. We provide reliable maintenance, security updates, and performance monitoring — so you can focus on growing your business, not fixing bugs.",
     techStack: ["24/7 Monitoring", "Security Updates", "Bug Fixes", "Performance Optimization", "SLA Support"],
   },
 ];

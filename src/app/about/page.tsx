@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const VALUES = [
   {
@@ -45,6 +46,7 @@ const TECH_STACK = [
 ];
 
 export default function AboutPage() {
+  const reducedMotion = useReducedMotion();
   return (
     <main className="min-h-screen">
       {/* Hero Section */}

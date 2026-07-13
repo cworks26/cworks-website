@@ -6,12 +6,7 @@
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test:playwright": "npx playwright test --project=chromium --reporter=json --output=research/reports/playwright-results",
-    "audit:lighthouse:desktop": "npx lighthouse http://localhost:3000 --chrome-flags=\"--no-sandbox --headless\" --output=html --output-path=research/reports/lighthouse-desktop.html --emulated-form-factor=desktop",
-    "audit:lighthouse:mobile": "npx lighthouse http://localhost:3000 --chrome-flags=\"--no-sandbox --headless\" --output=html --output-path=research/reports/lighthouse-mobile.html --emulated-form-factor=mobile",
-    "audit:all": "npm run audit:lighthouse:desktop && npm run audit:lighthouse:mobile",
-    "audit:a11y": "npx axe-core --help || echo \"axe unavailable; run a11y checks via Playwright axe plugin\""
+    "lint": "next lint"
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
@@ -30,11 +25,11 @@
     "react-slick": "^0.30.3",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "resend": "^6.17.2",
     "slick-carousel": "^1.8.1",
     "three": "^0.185.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
     "@types/aos": "^3.0.7",

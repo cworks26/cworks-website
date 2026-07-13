@@ -5,16 +5,20 @@ import { timelineData } from "@/app/api/data";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { getImagePrefix } from "@/utils/utils";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const TimeLine = () => {
   const ref = useRef(null);
   const inView = useInView(ref);
+  const reducedMotion = useReducedMotion();
 
-  const TopAnimation = {
-    initial: { y: "-100%", opacity: 0 },
-    animate: inView ? { y: 0, opacity: 1 } : { y: "-100%", opacity: 0 },
-    transition: { duration: 0.45, delay: 0.2 },
-  };
+  const TopAnimation = reducedMotion
+    ? { initial: {}, animate: {} }
+    : {
+        initial: { y: "-100%", opacity: 0 },
+        animate: inView ? { y: 0, opacity: 1 } : { y: "-100%", opacity: 0 },
+        transition: { duration: 0.45, delay: 0.2 },
+      };
   return (
     <section className="md:pt-40 pt-9" id="development">
       <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md lg:px-16 px-4">
@@ -32,15 +36,15 @@ const TimeLine = () => {
             </h2>
           </motion.div>
           <motion.div
-            whileInView={{ scale: 1, opacity: 1 }}
-            initial={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.6 }}
+            whileInView={reducedMotion ? {} : { scale: 1, opacity: 1 }}
+            initial={reducedMotion ? {} : { scale: 0.8, opacity: 0 }}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.6 }}
           >
             <div className="md:block hidden relative">
               <div>
                 <Picture
-                src={`${getImagePrefix()}images/timeline/process-flow.png`} 
-                  alt="CWorks project development process flow from discovery through design, development, and launch"
+                src={`${getImagePrefix()}images/timeline/process-flow.svg`}
+                  alt="CWorks project development process flow: Discovery, Design, Development, and Launch"
                   title="CWorks Development Process"
                   width={1220}
                   height={1000}

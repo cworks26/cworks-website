@@ -1,62 +1,73 @@
+"use client";
+import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+
 const values = [
   {
     icon: "🌍",
     title: "Uganda-Based, Globally-Minded",
     text: "Deep local expertise with international quality standards",
-    space: "lg:mt-8",
   },
   {
     icon: "🚀",
     title: "End-to-End Delivery",
     text: "From concept to deployment, we handle every phase",
-    space: "lg:mt-14",
   },
   {
     icon: "⚡",
     title: "Performance Obsessed",
     text: "Every pixel, every query, every interaction optimized",
-    space: "lg:mt-4",
   },
   {
     icon: "🤝",
     title: "Transparent Process",
     text: "Regular updates, clear timelines, no hidden costs",
-    space: "lg:mt-8",
   },
 ];
 
 const Perks = () => {
+  const reducedMotion = useReducedMotion();
   return (
-    <section className="pb-28 relative">
+    <section className="section-spacing relative">
       <div className="container mx-auto lg:max-w-screen-xl px-4">
-        <div className="text-center">
-          <p className="text-muted sm:text-28 text-18 mb-4 pb-6 relative after:content-[''] after:w-8 after:h-0.5 after:bg-primary after:absolute after:bottom-0 after:left-1/2">
-            Why <span className="text-primary">CWorks</span>
+        <motion.div
+          initial={reducedMotion ? {} : { opacity: 0, y: 30 }}
+          whileInView={reducedMotion ? {} : { opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
+          <p className="text-primary text-sm tracking-widest uppercase mb-4">
+            Why CWorks
           </p>
-          <h2 className="text-white sm:text-40 text-30 font-medium">
+          <h2 className="text-4xl md:text-5xl font-bold text-white">
             What sets our Kampala-based agency apart
           </h2>
-          <div className="mt-16 border border-border grid lg:grid-cols-4 sm:grid-cols-2 border-opacity-20 py-16 gap-10 px-20 rounded-3xl bg-dark_grey bg-opacity-35">
-            {values.map((item, index) => (
-              <div
-                key={index}
-                className="text-center flex items-center justify-end flex-col"
-              >
-                <div className="bg-primary bg-opacity-25 backdrop-blur-sm p-4 rounded-full w-fit">
-                  <span className="text-3xl">{item.icon}</span>
-                </div>
-                <h4 className={`text-white text-24 mb-4 ${item.space}`}>
-                  {item.title}
-                </h4>
-                <p className="text-muted text-opacity-60">
-                  {item.text}
-                </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {values.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={reducedMotion ? {} : { opacity: 0, y: 20 }}
+              whileInView={reducedMotion ? {} : { opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="glass-card p-8 text-center group"
+            >
+              <div className="bg-primary/10 border border-primary/20 p-4 rounded-2xl w-fit mx-auto mb-6 group-hover:bg-primary/20 transition-colors duration-300">
+                <span className="text-3xl">{item.icon}</span>
               </div>
-            ))}
-          </div>
+              <h3 className="text-white text-lg font-semibold mb-3">
+                {item.title}
+              </h3>
+              <p className="text-muted text-sm leading-relaxed">
+                {item.text}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
-      <div className="bg-gradient-to-br from-tealGreen to-charcoalGray sm:w-50 w-96 sm:h-50 h-96 rounded-full sm:-bottom-80 bottom-0 blur-400 z-0 absolute sm:-left-48 opacity-60"></div>
     </section>
   );
 };

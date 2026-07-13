@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)" rx="12"/>
+  <!-- Header -->
+  <rect x="30" y="20" width="740" height="50" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+  <text x="55" y="50" fill="white" font-family="sans-serif" font-size="16" font-weight="bold">🏫 Kampala International Academy</text>
+  <rect x="580" y="34" width="90" height="22" rx="6" fill="#3B82F6" opacity="0.2"/>
+  <text x="595" y="49" fill="#3B82F6" font-family="sans-serif" font-size="10">3,247 Students</text>
+  <!-- Sidebar -->
+  <rect x="30" y="85" width="200" height="390" rx="10" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+  <rect x="50" y="110" width="160" height="8" rx="4" fill="#3B82F6" opacity="0.6"/>
+  <rect x="50" y="135" width="160" height="8" rx="4" fill="#334155"/>
+  <rect x="50" y="160" width="160" height="8" rx="4" fill="#334155"/>
+  <rect x="50" y="185" width="160" height="8" rx="4" fill="#334155"/>
+  <rect x="50" y="210" width="160" height="8" rx="4" fill="#334155"/>
+  <rect x="50" y="250" width="160" height="8" rx="4" fill="#334155"/>
+  <rect x="50" y="275" width="160" height="8" rx="4" fill="#334155"/>
+  <!-- Data table -->
+  <rect x="250" y="85" width="520" height="190" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+  <text x="275" y="115" fill="white" font-family="sans-serif" font-size="12" font-weight="bold">Student Records — Grade 10A</text>
+  <!-- Table header -->
+  <rect x="270" y="130" width="480" height="25" rx="4" fill="#0F172A"/>
+  <text x="285" y="147" fill="#94A3B8" font-family="sans-serif" font-size="9">Name</text>
+  <text x="380" y="147" fill="#94A3B8" font-family="sans-serif" font-size="9">ID</text>
+  <text x="450" y="147" fill="#94A3B8" font-family="sans-serif" font-size="9">Fees</text>
+  <text x="530" y="147" fill="#94A3B8" font-family="sans-serif" font-size="9">Avg Score</text>
+  <text x="620" y="147" fill="#94A3B8" font-family="sans-serif" font-size="9">Status</text>
+  <!-- Table rows -->
+  <rect x="270" y="165" width="480" height="22" rx="3" fill="#1E293B"/>
+  <rect x="270" y="195" width="480" height="22" rx="3" fill="#1E293B"/>
+  <rect x="270" y="225" width="480" height="22" rx="3" fill="#1E293B"/>
+  <!-- Stats cards -->
+  <rect x="250" y="290" width="160" height="80" rx="10" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+  <text x="280" y="320" fill="#10B981" font-family="sans-serif" font-size="22" font-weight="bold">96%</text>
+  <text x="280" y="345" fill="#94A3B8" font-family="sans-serif" font-size="10">Fee Collection</text>
+  <rect x="430" y="290" width="160" height="80" rx="10" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+  <text x="460" y="320" fill="#3B82F6" font-family="sans-serif" font-size="22" font-weight="bold">B+</text>
+  <text x="460" y="345" fill="#94A3B8" font-family="sans-serif" font-size="10">Avg Grade</text>
+  <rect x="610" y="290" width="160" height="80" rx="10" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+  <text x="640" y="320" fill="#F59E0B" font-family="sans-serif" font-size="22" font-weight="bold">12</text>
+  <text x="640" y="345" fill="#94A3B8" font-family="sans-serif" font-size="10">Active Classes</text>
+  <!-- Calendar -->
+  <rect x="250" y="385" width="520" height="90" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+  <rect x="275" y="410" width="40" height="40" rx="6" fill="#0F172A"/>
+  <rect x="330" y="410" width="40" height="40" rx="6" fill="#0F172A"/>
+  <rect x="385" y="410" width="40" height="40" rx="6" fill="#0F172A"/>
+  <rect x="440" y="410" width="40" height="40" rx="6" fill="#0F172A"/>
+  <rect x="495" y="410" width="40" height="40" rx="6" fill="#0F172A"/>
+  <rect x="550" y="410" width="40" height="40" rx="6" fill="#0F172A"/>
+  <rect x="605" y="410" width="40" height="40" rx="6" fill="#0F172A"/>
+</svg>

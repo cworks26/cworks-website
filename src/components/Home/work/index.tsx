@@ -2,80 +2,102 @@
 import Image from "next/image";
 import Picture from '@/components/ui/Picture';
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getImagePrefix } from "@/utils/utils";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const Work = () => {
   const ref = useRef(null);
-  const inView = useInView(ref);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const reducedMotion = useReducedMotion();
+  const [counts, setCounts] = useState({ projects: 0, clients: 0, years: 0, team: 0 });
 
-  const TopAnimation = {
-    initial: { y: "-100%", opacity: 0 },
-    animate: inView ? { y: 0, opacity: 1 } : { y: "-100%", opacity: 0 },
-    transition: { duration: 0.45, delay: 0.2 },
-  };
+  const targetCounts = { projects: 50, clients: 30, years: 5, team: 7 };
 
-  const bottomAnimation = {
-    initial: { y: "100%", opacity: 0 },
-    animate: inView ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 },
-    transition: { duration: 0.45, delay: 0.2 },
-  };
+  useEffect(() => {
+    if (!inView) return;
+    const duration = 2000;
+    const steps = 60;
+    const interval = duration / steps;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const progress = step / steps;
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCounts({
+        projects: Math.round(targetCounts.projects * eased),
+        clients: Math.round(targetCounts.clients * eased),
+        years: Math.round(targetCounts.years * eased),
+        team: Math.round(targetCounts.team * eased),
+      });
+      if (step >= steps) clearInterval(timer);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [inView]);
 
   const stats = [
-    {
-      value: "50+",
-      label: "Projects Delivered",
-    },
-    {
-      value: "30+",
-      label: "Happy Clients",
-    },
-    {
-      value: "5+",
-      label: "Years Experience",
-    },
-    {
-      value: "7",
-      label: "Team Members",
-    },
+    { value: counts.projects, suffix: "+", label: "Projects Delivered" },
+    { value: counts.clients, suffix: "+", label: "Happy Clients" },
+    { value: counts.years, suffix: "+", label: "Years Experience" },
+    { value: counts.team, suffix: "", label: "Team Members" },
   ];
 
   return (
-    <section className="md:pt-28" id="team">
+    <section className="section-spacing" id="team">
       <div className="container mx-auto lg:max-w-screen-xl px-4">
-        <div ref={ref} className="grid grid-cols-12 items-center">
+        <div ref={ref} className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            {...bottomAnimation}
-            className="lg:col-span-7 col-span-12"
+            initial={reducedMotion ? {} : { opacity: 0, x: -30 }}
+            whileInView={reducedMotion ? {} : { opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="sm:text-28 text-18 text-white">
-              Our <span className="text-primary">Team</span>
+            <p className="text-primary text-sm tracking-widest uppercase mb-4">
+              Our Team
             </p>
-            <h2 className="sm:text-40 text-30 text-white lg:w-full md:w-70% font-medium">
-              Meet the experts behind CWorks
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              Meet the experts{" "}
+              <span className="gradient-text">behind CWorks</span>
             </h2>
-            <div className="grid md:grid-cols-2 gap-7 mt-11">
+            <p className="text-muted text-lg leading-relaxed mb-10">
+              A dedicated team of designers, developers, and strategists based
+              in Kampala, delivering digital excellence across East Africa.
+            </p>
+
+            <div className="grid grid-cols-2 gap-6">
               {stats.map((stat, index) => (
-                <div key={index} className="flex items-center gap-5">
-                  <div className="px-5 py-5 bg-primary bg-opacity-25 backdrop-blur-sm rounded-full flex items-center justify-center min-w-[60px]">
-                    <span className="text-white text-24 font-bold">
-                      {stat.value}
-                    </span>
-                  </div>
-                  <p className="text-20 text-muted">{stat.label}</p>
-                </div>
+                <motion.div
+                  key={index}
+                  initial={reducedMotion ? {} : { opacity: 0, y: 20 }}
+                  whileInView={reducedMotion ? {} : { opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="glass-card p-5 text-center"
+                >
+                  <span className="block text-3xl font-bold gradient-text">
+                    {stat.value}{stat.suffix}
+                  </span>
+                  <span className="text-muted text-sm">{stat.label}</span>
+                </motion.div>
               ))}
             </div>
           </motion.div>
-          <motion.div {...TopAnimation} className="lg:col-span-5 col-span-12">
-            <div className="2xl:-mr-40 mt-9 flex justify-center">
+
+          <motion.div
+            initial={reducedMotion ? {} : { opacity: 0, x: 30 }}
+            whileInView={reducedMotion ? {} : { opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent rounded-3xl blur-3xl" />
               <Picture
-                src={`${getImagePrefix()}images/work/team-collaboration.png`}
-                alt="CWorks professional team collaborating on digital projects in a modern Kampala office"
+                src={`${getImagePrefix()}images/work/team-collaboration.svg`}
+                alt="CWorks professional team collaborating on digital projects in Kampala"
                 title="Meet the CWorks Team"
                 width={600}
                 height={425}
-                className="lg:w-full"
+                className="relative z-10 rounded-2xl"
                 loading="lazy"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
               />

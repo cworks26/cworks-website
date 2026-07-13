@@ -82,30 +82,93 @@ export const pricedeta: {
   },
 ];
 
-export const portfolioData: { image: string; title: string }[] = [
+export const portfolioData: {
+  image: string;
+  title: string;
+  category: string;
+  description: string;
+  link?: string;
+}[] = [
   {
-    image: "images/portfolio/icon-wallet.svg",
+    image: "images/portfolio/ecommerce-platform.svg",
     title: "E-Commerce Platform",
+    category: "Web Development",
+    description:
+      "Full-featured online marketplace with payment integration and inventory management for a Kampala retailer.",
+    link: "#",
   },
   {
-    image: "images/portfolio/icon-vault.svg",
+    image: "images/portfolio/healthcare-dashboard.svg",
     title: "Healthcare Dashboard",
+    category: "UI/UX Design",
+    description:
+      "Real-time patient management dashboard serving 12 clinics across Eastern Uganda.",
+    link: "#",
   },
   {
-    image: "images/portfolio/icon-mobileapp.svg",
+    image: "images/portfolio/restaurant-website.svg",
     title: "Restaurant Chain Website",
+    category: "Web Development",
+    description:
+      "Multi-location restaurant website with online ordering and reservation system deployed across 5 branches.",
+    link: "#",
   },
   {
-    image: "images/portfolio/icon-wallet.svg",
+    image: "images/portfolio/ngo-portal.svg",
     title: "NGO Impact Portal",
+    category: "Custom Systems",
+    description:
+      "Donor management and impact tracking system for an East African non-profit organization.",
+    link: "#",
   },
   {
-    image: "images/portfolio/icon-vault.svg",
+    image: "images/portfolio/school-system.svg",
     title: "School Management System",
+    category: "Database & Systems",
+    description:
+      "Student records, fee management, and academic reporting platform serving 3,000+ students.",
+    link: "#",
   },
   {
-    image: "images/portfolio/icon-mobileapp.svg",
+    image: "images/portfolio/realestate-listings.svg",
     title: "Real Estate Listings",
+    category: "Web Development",
+    description:
+      "Property listing and virtual tour platform with integrated CRM for a Kampala real estate agency.",
+    link: "#",
+  },
+];
+
+export const teamData: {
+  name: string;
+  role: string;
+  photo: string;
+  bio: string;
+  socials?: { platform: string; url: string }[];
+}[] = [
+  {
+    name: "Alex Mukasa",
+    role: "Lead Developer & Founder",
+    photo: "images/team/alex-mukasa.svg",
+    bio: "Full-stack engineer with 8+ years building scalable web applications. Passionate about clean code and East Africa's tech ecosystem.",
+  },
+  {
+    name: "Grace Nakamya",
+    role: "UI/UX Designer",
+    photo: "images/team/grace-nakamya.svg",
+    bio: "Human-centered designer specializing in research-driven interfaces that convert. Previously at fintech and e-commerce startups.",
+  },
+  {
+    name: "David Okello",
+    role: "Backend Engineer",
+    photo: "images/team/david-okello.svg",
+    bio: "Database architect and API specialist. Builds the infrastructure that powers mission-critical business applications.",
+  },
+  {
+    name: "Sarah Auma",
+    role: "Graphic Designer",
+    photo: "images/team/sarah-auma.svg",
+    bio: "Brand identity expert who transforms business visions into memorable visual stories across print and digital media.",
   },
 ];
 

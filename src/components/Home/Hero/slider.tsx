@@ -1,18 +1,22 @@
+"use client";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { pricedeta } from "@/app/api/data";
 import Image from "next/image";
 import { getImagePrefix } from "@/utils/utils";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const CardSlider = () => {
+  const reducedMotion = useReducedMotion();
+
   const settings = {
-    autoplay: true,
+    autoplay: !reducedMotion,
     dots: false,
     arrows: false,
     infinite: true,
     autoplaySpeed: 1500,
-    speed: 300,
+    speed: reducedMotion ? 0 : 300,
     slidesToShow: 4,
     slidesToScroll: 1,
     cssEase: "ease-in-out",
@@ -38,7 +42,7 @@ const CardSlider = () => {
     ],
   };
   return (
-    <div className="lg:-mt-16 mt-16">
+    <div className="lg:-mt-16 mt-16" aria-label="Our services showcase">
       <Slider {...settings}>
         {pricedeta.map((item, index) => (
           <div key={index} className="pr-6">
@@ -48,8 +52,8 @@ const CardSlider = () => {
                   className={`${item.background} ${item.padding} rounded-full`}
                 >
                   <Image
-                    src= {`${getImagePrefix()}${item.icon}`}
-                    alt="icon"
+                    src={`${getImagePrefix()}${item.icon}`}
+                    alt={`${item.title} service icon`}
                     width={item.width}
                     height={item.height}
                   />

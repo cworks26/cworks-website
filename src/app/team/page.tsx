@@ -1,187 +1,112 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const TEAM = [
-  {
-    name: "Collin Oriho",
-    role: "Lead Developer & Founder",
-    bio: "Visionary technologist with a passion for building digital solutions that transform businesses. Collin leads the technical direction at CWorks, ensuring every project meets the highest standards of quality and innovation.",
-    initials: "CO",
-    gradient: "from-[#0815A6] to-[#050F67]",
-  },
-  {
-    name: "Sarah Nabirye",
-    role: "UI/UX Designer",
-    bio: "User experience advocate who believes great design starts with empathy. Sarah transforms complex requirements into intuitive, beautiful interfaces that users love to interact with.",
-    initials: "SN",
-    gradient: "from-[#050F67] to-[#1E0339]",
-  },
-  {
-    name: "David Ochieng",
-    role: "Backend Developer",
-    bio: "Database architect and API specialist with a knack for building robust, scalable server-side systems. David ensures that every application runs smoothly behind the scenes.",
-    initials: "DO",
-    gradient: "from-[#1E0339] to-[#0815A6]",
-  },
-  {
-    name: "Grace Auma",
-    role: "Frontend Developer",
-    bio: "Pixel-perfect frontend specialist who brings designs to life with clean, performant code. Grace is passionate about responsive design and seamless user experiences across all devices.",
-    initials: "GA",
-    gradient: "from-[#0815A6] to-[#1E0339]",
-  },
-  {
-    name: "Patrick Musoke",
-    role: "DevOps Engineer",
-    bio: "Infrastructure and deployment expert who keeps our systems running 24/7. Patrick handles CI/CD pipelines, cloud architecture, and ensures reliable, secure hosting for every client.",
-    initials: "PM",
-    gradient: "from-[#050F67] to-[#0815A6]",
-  },
-  {
-    name: "Amina Wanjiku",
-    role: "Project Manager",
-    bio: "Certified project manager who bridges the gap between clients and developers. Amina ensures every project stays on track, on budget, and delivers exactly what was promised.",
-    initials: "AW",
-    gradient: "from-[#1E0339] to-[#050F67]",
-  },
-  {
-    name: "Brian Sseguya",
-    role: "Graphic Designer",
-    bio: "Creative powerhouse behind our visual identities. Brian crafts logos, brand guidelines, and marketing materials that capture the essence of each client's unique story and values.",
-    initials: "BS",
-    gradient: "from-[#0815A6] to-[#050F67]",
-  },
-];
+import Image from "next/image";
+import { teamData } from "@/app/api/data";
+import { getImagePrefix } from "@/utils/utils";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export default function TeamPage() {
+  const reducedMotion = useReducedMotion();
+
   return (
     <main className="min-h-screen">
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="container mx-auto lg:max-w-screen-xl px-4">
-          <div className="max-w-3xl" data-aos="fade-up" data-aos-duration="800">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-primary text-sm font-medium uppercase tracking-wider"
-            >
-              Meet Our Team
-            </motion.span>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
-            >
-              The People Behind{" "}
+          <div className="max-w-3xl mx-auto text-center" data-aos="fade-up" data-aos-duration="800">
+            <span className="text-primary text-sm font-medium uppercase tracking-wider">
+              Our Team
+            </span>
+            <h1 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+              Meet the people behind{" "}
               <span className="text-primary">CWorks</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-6 text-lg text-muted leading-relaxed"
-            >
-              A diverse team of developers, designers, and strategists united by
-              a shared passion for building exceptional digital experiences.
-              We&apos;re not just colleagues — we&apos;re a family that learns,
-              builds, and grows together.
-            </motion.p>
+            </h1>
+            <p className="mt-6 text-lg text-muted leading-relaxed max-w-2xl mx-auto">
+              A small, focused team of Kampala-based engineers and designers
+              dedicated to building digital products that make a real difference.
+            </p>
           </div>
         </div>
-        {/* Gradient blobs */}
-        <div className="absolute w-50 h-50 bg-gradient-to-bl from-[#0815A6] to-[#050F67] blur-400 rounded-full -top-64 -right-14 -z-1"></div>
-        <div className="absolute w-40 h-40 bg-gradient-to-tr from-[#1E0339] to-[#050F67] blur-300 rounded-full -bottom-32 -left-20 -z-1"></div>
+        <div className="absolute w-50 h-50 bg-gradient-to-bl from-[#0815A6] to-[#050F67] blur-400 rounded-full -top-64 -right-14 -z-1" aria-hidden="true" />
+        <div className="absolute w-40 h-40 bg-gradient-to-tr from-[#1E0339] to-[#050F67] blur-300 rounded-full -bottom-32 -left-20 -z-1" aria-hidden="true" />
       </section>
 
       {/* Team Grid */}
       <section className="py-20 bg-dark_grey/30">
         <div className="container mx-auto lg:max-w-screen-xl px-4">
-          <div
-            className="text-center max-w-2xl mx-auto mb-16"
-            data-aos="fade-up"
-            data-aos-duration="800"
-          >
-            <span className="text-primary text-sm font-medium uppercase tracking-wider">
-              Our People
-            </span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-bold text-white">
-              The Talent Behind{" "}
-              <span className="text-primary">Your Projects</span>
-            </h2>
-            <p className="mt-4 text-muted leading-relaxed">
-              Each team member brings unique expertise and perspective. Together,
-              we deliver solutions that exceed expectations.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {TEAM.map((member, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {teamData.map((member, index) => (
               <motion.div
                 key={member.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={reducedMotion ? {} : { opacity: 0, y: 30 }}
+                whileInView={reducedMotion ? {} : { opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -6 }}
-                className="group rounded-2xl border border-dark_border bg-darkmode p-8 transition-all duration-300 hover:border-primary/30 text-center"
+                transition={reducedMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.1 }}
+                className="group text-center"
               >
-                {/* Avatar Placeholder */}
-                <div className="mx-auto mb-5">
-                  <div
-                    className={`h-24 w-24 rounded-full bg-gradient-to-br ${member.gradient} flex items-center justify-center mx-auto ring-4 ring-dark_border group-hover:ring-primary/30 transition-all duration-300`}
-                  >
-                    <span className="text-3xl font-bold text-white select-none">
-                      {member.initials}
-                    </span>
-                  </div>
+                {/* Profile Photo */}
+                <div className="relative mx-auto mb-5 w-48 h-48 rounded-2xl overflow-hidden border-2 border-dark_border border-opacity-20 transition-colors group-hover:border-primary/40">
+                  <Image
+                    src={`${getImagePrefix()}${member.photo}`}
+                    alt={`${member.name}, ${member.role} at CWorks`}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12rem"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                {/* Name & Role */}
+                {/* Info */}
                 <h3 className="text-xl font-semibold text-white group-hover:text-primary transition-colors">
                   {member.name}
                 </h3>
-                <p className="mt-1 text-primary text-sm font-medium">
-                  {member.role}
-                </p>
-
-                {/* Bio */}
-                <p className="mt-4 text-muted text-sm leading-relaxed">
+                <p className="text-sm text-primary font-medium mt-1">{member.role}</p>
+                <p className="mt-3 text-muted text-sm leading-relaxed text-opacity-80">
                   {member.bio}
                 </p>
-
-                {/* Hover glow */}
-                <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Join Us CTA */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="container mx-auto lg:max-w-screen-xl px-4 text-center">
-          <div data-aos="fade-up" data-aos-duration="800">
+      {/* Values / Join Us CTA */}
+      <section className="py-20">
+        <div className="container mx-auto lg:max-w-screen-xl px-4">
+          <div className="max-w-2xl mx-auto text-center" data-aos="fade-up" data-aos-duration="800">
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Want to <span className="text-primary">Join the Team?</span>
+              Our <span className="text-primary">Values</span>
             </h2>
-            <p className="mt-4 text-muted max-w-xl mx-auto leading-relaxed">
-              We&apos;re always looking for talented people who share our
-              passion for great digital work. Reach out and let&apos;s talk.
-            </p>
-            <div className="mt-8">
+            <div className="mt-10 grid sm:grid-cols-2 gap-6 text-left">
+              {[
+                { title: "Quality Over Quantity", desc: "We take on fewer projects to deliver exceptional results every time." },
+                { title: "Radical Transparency", desc: "Open communication, clear timelines, and honest pricing — always." },
+                { title: "Local Expertise, Global Standards", desc: "Deep understanding of East African markets with world-class engineering practices." },
+                { title: "Continuous Learning", desc: "We stay at the cutting edge so your products benefit from the latest technology." },
+              ].map((v) => (
+                <div key={v.title} className="rounded-xl border border-dark_border bg-darkmode p-6">
+                  <h3 className="text-white font-semibold">{v.title}</h3>
+                  <p className="mt-2 text-muted text-sm">{v.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-16 p-10 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20">
+              <h3 className="text-2xl font-bold text-white">Want to join the team?</h3>
+              <p className="mt-3 text-muted">
+                We're always looking for talented people passionate about building great products.
+              </p>
               <a
                 href="/contact"
-                className="bg-primary border border-primary rounded-lg text-white font-medium hover:bg-transparent hover:text-primary py-3 px-8 transition-all duration-300 inline-block"
+                className="mt-6 inline-block bg-primary border border-primary rounded-lg text-white font-medium hover:bg-transparent hover:text-primary py-3 px-8 transition-all duration-300"
               >
-                Get In Touch
+                Get in Touch
               </a>
             </div>
           </div>
         </div>
-        <div className="absolute w-50 h-50 bg-gradient-to-bl from-[#0815A6] to-[#050F67] blur-400 rounded-full -bottom-32 -right-14 -z-1"></div>
       </section>
     </main>
   );

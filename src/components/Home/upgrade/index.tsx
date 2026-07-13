@@ -1,79 +1,85 @@
+"use client";
 import Link from "next/link";
-import Image from "next/image";
-import Picture from '@/components/ui/Picture';
 import { Icon } from "@iconify/react";
-import { getImagePrefix } from "@/utils/utils";
+import { motion } from "framer-motion";
 import BeamsBackground from "@/components/Backgrounds/Beams";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const benefits = [
-  { title: "Free Consultation" },
-  { title: "Custom Solutions" },
-  { title: "On-Time Delivery" },
-  { title: "Ongoing Support" },
+  { title: "Free Consultation", desc: "No-obligation discovery call" },
+  { title: "Custom Solutions", desc: "Tailored to your exact needs" },
+  { title: "On-Time Delivery", desc: "Deadlines we actually meet" },
+  { title: "Ongoing Support", desc: "We're here after launch" },
 ];
 
 const Upgrade = () => {
+  const reducedMotion = useReducedMotion();
+
   return (
-    <section className="md:py-40 py-20 relative" id="contact">
+    <section className="relative py-24 md:py-32 overflow-hidden" id="contact">
       <BeamsBackground />
+
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-darkmode/90 via-darkmode/60 to-darkmode/90 z-[1]" />
+
       <div className="container mx-auto lg:max-w-screen-xl px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 sm:gap-0 gap-10 items-center">
-          <div>
-            <p className="text-primary sm:text-28 text-18 mb-3">Let's Talk</p>
-            <h2 className="text-white sm:text-40 text-30  font-medium mb-5">
-              Ready to Build Something Great?
-            </h2>
-            <p className="text-muted text-opacity-60 text-18 mb-7">
-              Let's discuss your project and turn your vision into reality
-            </p>
-            <div className="grid sm:grid-cols-2 text-nowrap sm:gap-10 gap-5 mb-8">
-              {benefits.map((item, index) => (
-                <div key={index} className="flex gap-5">
-                  <div>
-                    <Icon
-                      icon="la:check-circle-solid"
-                      width="24"
-                      height="24"
-                      className="text-white group-hover:text-primary"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-18 text-muted text-opacity-60">
-                      {item.title}
-                    </h4>
-                  </div>
+        <motion.div
+          initial={reducedMotion ? {} : { opacity: 0, y: 30 }}
+          whileInView={reducedMotion ? {} : { opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-3xl mx-auto"
+        >
+          <p className="text-primary text-sm tracking-widest uppercase mb-4">
+            Let&apos;s Talk
+          </p>
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            Ready to build{" "}
+            <span className="gradient-text">something great?</span>
+          </h2>
+          <p className="text-muted text-lg mb-12 max-w-xl mx-auto leading-relaxed">
+            Let&apos;s discuss your project and turn your vision into reality.
+            No fluff, no hard sell — just a conversation about what you need.
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto text-left">
+            {benefits.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={reducedMotion ? {} : { opacity: 0, x: -20 }}
+                whileInView={reducedMotion ? {} : { opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="glass-card p-4 flex items-center gap-4"
+              >
+                <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center flex-shrink-0">
+                  <Icon
+                    icon="ph:check-bold"
+                    width="20"
+                    height="20"
+                    className="text-primary"
+                  />
                 </div>
-              ))}
-            </div>
-            <div className="flex items-center gap-6">
-              <Link
-                href="#contact"
-                className="bg-primary border border-primary rounded-lg text-21 font-medium hover:bg-transparent hover:text-primary text-white py-2 px-7"
-              >
-                Contact Us
-              </Link>
-              <Link
-                href="#portfolio"
-                className="bg-transparent border border-primary rounded-lg text-21 font-medium hover:bg-primary hover:text-white text-primary py-2 px-7"
-              >
-                View Portfolio
-              </Link>
-            </div>
+                <div>
+                  <p className="text-white font-medium text-sm">{item.title}</p>
+                  <p className="text-muted text-xs">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
-          <div>
-            <div className="">
-              <Picture
-                src={`${getImagePrefix()}images/upgrade/lets-talk.png`}
-                alt="CWorks client consultation and project discussion for digital solutions"
-                title="Let's Talk About Your Project"
-                width={625}
-                height={580}
-                className="-mr-5"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 625px"
-              />
-            </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/contact" className="btn-primary glow-hover">
+              Contact Us
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </Link>
+            <Link href="/portfolio" className="btn-outline">
+              View Portfolio
+            </Link>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

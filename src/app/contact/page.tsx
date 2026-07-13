@@ -1,15 +1,54 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, type FormEvent } from "react";
 
 export default function ContactPage() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert("Thank you for your message! We will get back to you within 24 hours.");
-    setSubmitted(true);
+    setError(null);
+    setIsSubmitting(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const payload = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      project_type: formData.get("project_type") as string,
+      budget: formData.get("budget") as string,
+      timeline: formData.get("timeline") as string,
+      message: formData.get("message") as string,
+      _honey: formData.get("_honey") as string, // honeypot field
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Something went wrong. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      setSubmitted(true);
+      form.reset();
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -90,20 +129,39 @@ export default function ContactPage() {
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                  {/* Honeypot — hidden from users, traps bots */}
+                  <div className="absolute opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
+                    <label htmlFor="_honey">Leave this empty</label>
+                    <input
+                      type="text"
+                      id="_honey"
+                      name="_honey"
+                      autoComplete="off"
+                      tabIndex={-1}
+                    />
+                  </div>
+
+                  {error && (
+                    <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-400" role="alert">
+                      {error}
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                       <label
                         htmlFor="name"
                         className="block text-sm font-medium text-white mb-2"
                       >
-                        Name
+                        Name <span className="text-primary">*</span>
                       </label>
                       <input
                         id="name"
                         name="name"
                         type="text"
                         required
+                        autoComplete="name"
                         className="w-full rounded-xl border border-dark_border bg-dark_grey px-4 py-3 text-white placeholder-muted transition-colors focus:border-primary/40 focus:outline-none"
                         placeholder="Your name"
                       />
@@ -113,34 +171,92 @@ export default function ContactPage() {
                         htmlFor="email"
                         className="block text-sm font-medium text-white mb-2"
                       >
-                        Email
+                        Email <span className="text-primary">*</span>
                       </label>
                       <input
                         id="email"
                         name="email"
                         type="email"
                         required
+                        autoComplete="email"
                         className="w-full rounded-xl border border-dark_border bg-dark_grey px-4 py-3 text-white placeholder-muted transition-colors focus:border-primary/40 focus:outline-none"
                         placeholder="you@example.com"
                       />
                     </div>
                   </div>
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        htmlFor="project_type"
+                        className="block text-sm font-medium text-white mb-2"
+                      >
+                        Project Type
+                      </label>
+                      <select
+                        id="project_type"
+                        name="project_type"
+                        className="w-full rounded-xl border border-dark_border bg-dark_grey px-4 py-3 text-white transition-colors focus:border-primary/40 focus:outline-none appearance-none"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Select project type
+                        </option>
+                        <option value="website">Website / Web App</option>
+                        <option value="uiux">UI/UX Design</option>
+                        <option value="branding">Branding & Graphics</option>
+                        <option value="system">Custom System / Database</option>
+                        <option value="consulting">Consulting & Strategy</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="budget"
+                        className="block text-sm font-medium text-white mb-2"
+                      >
+                        Budget Range
+                      </label>
+                      <select
+                        id="budget"
+                        name="budget"
+                        className="w-full rounded-xl border border-dark_border bg-dark_grey px-4 py-3 text-white transition-colors focus:border-primary/40 focus:outline-none appearance-none"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Select budget range
+                        </option>
+                        <option value="under-1m">Under UGX 1,000,000</option>
+                        <option value="1m-5m">UGX 1,000,000 – 5,000,000</option>
+                        <option value="5m-15m">UGX 5,000,000 – 15,000,000</option>
+                        <option value="15m-plus">UGX 15,000,000+</option>
+                        <option value="not-sure">Not sure yet</option>
+                      </select>
+                    </div>
+                  </div>
+
                   <div>
                     <label
-                      htmlFor="subject"
+                      htmlFor="timeline"
                       className="block text-sm font-medium text-white mb-2"
                     >
-                      Subject
+                      Desired Timeline
                     </label>
-                    <input
-                      id="subject"
-                      name="subject"
-                      type="text"
-                      required
-                      className="w-full rounded-xl border border-dark_border bg-dark_grey px-4 py-3 text-white placeholder-muted transition-colors focus:border-primary/40 focus:outline-none"
-                      placeholder="What is this about?"
-                    />
+                    <select
+                      id="timeline"
+                      name="timeline"
+                      className="w-full rounded-xl border border-dark_border bg-dark_grey px-4 py-3 text-white transition-colors focus:border-primary/40 focus:outline-none appearance-none"
+                      defaultValue=""
+                    >
+                      <option value="" disabled>
+                        When do you need this?
+                      </option>
+                      <option value="urgent">ASAP / Urgent</option>
+                      <option value="2-weeks">Within 2 weeks</option>
+                      <option value="1-month">Within 1 month</option>
+                      <option value="3-months">Within 3 months</option>
+                      <option value="flexible">Flexible — planning ahead</option>
+                    </select>
                   </div>
 
                   <div>
@@ -148,12 +264,12 @@ export default function ContactPage() {
                       htmlFor="message"
                       className="block text-sm font-medium text-white mb-2"
                     >
-                      Message
+                      Message <span className="text-primary">*</span>
                     </label>
                     <textarea
                       id="message"
                       name="message"
-                      rows={6}
+                      rows={5}
                       required
                       className="w-full resize-none rounded-xl border border-dark_border bg-dark_grey px-4 py-3 text-white placeholder-muted transition-colors focus:border-primary/40 focus:outline-none"
                       placeholder="Tell us about your project, goals, and timeline..."
@@ -162,9 +278,10 @@ export default function ContactPage() {
 
                   <button
                     type="submit"
-                    className="w-full sm:w-auto bg-primary border border-primary rounded-lg text-white font-medium hover:bg-transparent hover:text-primary py-3 px-10 transition-all duration-300"
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto bg-primary border border-primary rounded-lg text-white font-medium hover:bg-transparent hover:text-primary py-3 px-10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </button>
                 </form>
               )}
