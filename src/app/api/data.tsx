@@ -82,30 +82,36 @@ export const pricedeta: {
   },
 ];
 
-export const portfolioData: { image: string; title: string }[] = [
+export const portfolioData: { icon: string; title: string; tag: string }[] = [
   {
-    image: "/images/portfolio/icon-wallet.svg",
+    icon: "icon-cart",
     title: "E-Commerce Platform",
+    tag: "Online store with mobile money checkout",
   },
   {
-    image: "/images/portfolio/icon-vault.svg",
+    icon: "icon-health",
     title: "Healthcare Dashboard",
+    tag: "Patient records & analytics system",
   },
   {
-    image: "/images/portfolio/icon-mobileapp.svg",
+    icon: "icon-phone",
     title: "Restaurant Chain Website",
+    tag: "Multi-branch ordering & menus",
   },
   {
-    image: "/images/portfolio/icon-wallet.svg",
+    icon: "icon-heart",
     title: "NGO Impact Portal",
+    tag: "Donor reporting & program tracking",
   },
   {
-    image: "/images/portfolio/icon-vault.svg",
+    icon: "icon-grad",
     title: "School Management System",
+    tag: "Enrollment, fees & report cards",
   },
   {
-    image: "/images/portfolio/icon-mobileapp.svg",
+    icon: "icon-home",
     title: "Real Estate Listings",
+    tag: "Property search with agent portals",
   },
 ];
 

@@ -3,6 +3,7 @@ import Hero from "@/components/Home/Hero";
 import Work from "@/components/Home/work";
 import TimeLine from "@/components/Home/timeline";
 import Platform from "@/components/Home/platform";
+import CaseStudy from "@/components/Home/caseStudies";
 import Portfolio from "@/components/Home/portfolio";
 import Upgrade from "@/components/Home/upgrade";
 import Perks from "@/components/Home/perks";
@@ -18,6 +19,7 @@ export default function Home() {
       <Work />
       <TimeLine />
       <Platform />
+      <CaseStudy />
       <Portfolio />
       <Upgrade />
       <Perks />
